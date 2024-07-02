@@ -31,11 +31,11 @@ def get_weather(location: str):
 async def visitor_info(request: Request, visitor_name: str):
     client_ip, location = get_location_by_ip()
     temperature, city = get_weather(client_ip)
-    greeting = f"Hello, {visitor_name}!, the temperature is {temperature} degrees Celsius in {city}"
+    greeting = f"Hello, {visitor_name}!, the temperature is {temperature} degrees Celsius in {location}"
     
     return {
         "client_ip": client_ip,
-        "location": city,
+        "location": location,
         "greeting": greeting
     }
 
