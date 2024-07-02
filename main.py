@@ -2,7 +2,6 @@ from fastapi import FastAPI, Request
 import requests
 from dotenv import load_dotenv
 import os
-import uvicorn
 
 load_dotenv()
 
@@ -29,8 +28,9 @@ def get_weather(location: str):
 
 @app.get("/api/hello")
 async def visitor_info(request: Request, visitor_name: str):
+    visitor_name = visitor_name.strip('"')
     client_ip, location = get_location_by_ip()
-    temperature, city = get_weather(client_ip)
+    temperature, city = get_weather(location)
     greeting = f"Hello, {visitor_name}!, the temperature is {temperature} degrees Celsius in {location}"
     
     return {
@@ -39,5 +39,3 @@ async def visitor_info(request: Request, visitor_name: str):
         "greeting": greeting
     }
 
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
